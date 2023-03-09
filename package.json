@@ -1,5 +1,5 @@
 {
-  "name": "@jiman24/discordjs-rpg",
+  "name": "@abdulrahman1s/discordjs-rpg",
   "version": "5.2.1",
   "description": "discord rpg framework",
   "main": "dist/index.js",
@@ -7,8 +7,6 @@
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
-    "doc": "typedoc --out docs src/index.ts",
-    "dev": "nodemon dist/test/index.js",
     "watch": "tsc -w"
   },
   "keywords": [
@@ -16,17 +14,16 @@
     "bot",
     "rpg"
   ],
-  "author": "issadarkthing",
+  "author": "abdulrahman1s",
   "repository": {
     "type": "git",
-    "url": "git://github.com/issadarkthing/discordjs-rpg.git"
+    "url": "git://github.com/abdulrahman1s/discordjs-rpg.git"
   },
   "license": "MIT",
   "dependencies": {
     "@jiman24/slash-commandment": "^1.2.1",
     "common-tags": "^1.8.0",
     "discord.js": "14.3",
-    "dotenv": "^10.0.0",
     "lodash.clonedeep": "^4.5.0",
     "random-js": "^2.1.0"
   },

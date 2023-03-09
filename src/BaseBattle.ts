@@ -83,11 +83,17 @@ export abstract class BaseBattle {
   }
 
   protected attack(p1: Fighter, p2: Fighter) {
-    const isCrit = p1.isCrit();
-    const attackRate = isCrit ? p1.attack * p1.critDamage : p1.attack;
+    const isCrit = p1.isCrit(), isElementalDamage = p1.isElementalDamage() && p1.element.isStrongAgainst(p2.element)
+
+    let multipleDamageBy = 0
+
+    if (isCrit) multipleDamageBy += p1.critDamage
+    if (isElementalDamage) multipleDamageBy += p2.elementalDamage
+
+    const attackRate = multipleDamageBy ? p1.attack * multipleDamageBy : p1.attack
     const armorProtection = p2.armor * attackRate;
     const damageDealt = attackRate - armorProtection;
-    const critText = isCrit ? ` (x${p1.critDamage.toFixed(1)}) 🔥` : "";
+    const text = multipleDamageBy ? ` (x${multipleDamageBy.toFixed(1)}) 🔥` : ''
 
     p2.hp -= damageDealt;
 
@@ -97,7 +103,7 @@ export abstract class BaseBattle {
         { name: "Attacking Player", value: p1.name, inline: true },
         { name: "Defending Player", value: p2.name, inline: true },
         { name: "Round", value: `\`${this.round.toString()}\``, inline: true },
-        { name: "Attack Rate", value: `\`${Math.round(attackRate)}${critText}\``, inline: true },
+        { name: "Attack Rate", value: `\`${Math.round(attackRate)}${text}\``, inline: true },
         { name: "Damage Reduction", value: `\`${Math.round(armorProtection)}\``, inline: true },
         { name: "Damage Done", value: `\`${Math.round(damageDealt)}\``, inline: true },
       ]);

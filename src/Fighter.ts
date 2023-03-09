@@ -12,6 +12,7 @@ import {
   GREEN_CIRLE,
 } from "./utils";
 import { Weapon } from "./Weapon";
+import { Elemental, ELEMENTAL_TYPES } from './Elemental'
 
 /** 
  * Fighter is base class to be used in Battle. Only class derived from Fighter
@@ -51,10 +52,13 @@ export class Fighter extends Base {
   /** Image to represent this Fighter */
   imageUrl?: string;
 
+  element: Elemental
+
   constructor(name: string) {
     super();
     this.name = name;
     this.id = name;
+    this.element = random.pick(Object.values(ELEMENTAL_TYPES))
   }
 
   /** Add new armor to the user */
@@ -72,6 +76,15 @@ export class Fighter extends Base {
   /** Returns true if critical attack */
   isCrit() {
     return random.bool(this.critChance);
+  }
+
+  get elementalDamage() {
+    return this.equippedWeapons.reduce((prev, cur) => prev += cur.elementalDamage, 0)
+  }
+
+  isElementalDamage() {
+    const chance: number = this.equippedWeapons.reduce((prev, cur) => prev += cur.elementalChance, 0)
+    return random.bool(chance)
   }
 
   /** 

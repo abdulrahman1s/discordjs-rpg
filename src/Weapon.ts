@@ -26,6 +26,10 @@ export abstract class Weapon extends Base {
   /** Attack attribute to be added when player equip this weapon */
   attack = 10;
 
+  elementalChance = 0
+  
+  elementalDamage = 0
+
   /** MessageEmbed that represents Weapon */
   show() {
 
