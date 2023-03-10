@@ -112,18 +112,18 @@ export class Fighter extends Base {
       .setTitle("Profile")
       .setColor(GOLD)
       .setFields([
-        { name: "Name", value: this.name },
-        { name: 'Element', value: inlineCode(this.element.type) },
-        { name: "Attack", value: inlineCode(Math.round(this.attack).toString()), inline: true },
+        { name: "Name", value: this.name, inline: true },
+        { name: 'Element', value: inlineCode(this.element.type), inline: true },
+        { name: "Attack", value: inlineCode(Math.round(this.attack).toString()), inline: false },
         { name: "HP", value: inlineCode(Math.round(this.hp).toString()), inline: true },
         { name: "Armor", value: inlineCode(armor), inline: true },
-        { name: "Crit Chance", value: inlineCode(critChance), inline: true },
+        { name: "Crit Chance", value: inlineCode(critChance), inline: false },
         { name: "Crit Damage", value: inlineCode(`x${this.critDamage.toFixed(1)}`), inline: true },
-        { name: 'Elemental Chance', value: inlineCode(elementalChance), inline: true },
+        { name: 'Elemental Chance', value: inlineCode(elementalChance), inline: false },
         { name: 'Elemental Damage', value: inlineCode(`x${this.elementalDamage.toFixed(1)}`), inline: true },
-        { name: "Skill", value: this.skill?.name || "none", inline: true },
-        { name: "Pet", value: this.pet?.name || "none" },
-        { name: "Armors", value: armorList || "none", inline: true },
+        { name: "Skill", value: this.skill?.name || "none", inline: false },
+        { name: "Pet", value: this.pet?.name || "none", inline: true },
+        { name: "Armors", value: armorList || "none", inline: false },
         { name: "Weapons", value: weaponList || "none", inline: true },
       ])
 
