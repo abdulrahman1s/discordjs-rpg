@@ -1,6 +1,7 @@
 import { EmbedBuilder, CommandInteraction } from "discord.js";
-import { RED, sleep } from "./utils";
+import { random, RED, sleep } from "./utils";
 import { Fighter } from "./Fighter";
+import { Biome } from "./Biome";
 
 interface PlayerGameStat {
   totalDamageDealt: number;
@@ -22,13 +23,21 @@ export abstract class BaseBattle {
   /** Logs battle to stdout */
   logBattle = false;
 
+  biome?: Biome
+
   /** 
    * @param {CommandInteraction} i - discord.js's CommandInteraction
    * @param {Fighter[]} fighters - array of Fighter's object
    * */
-  constructor(i: CommandInteraction, fighters: Fighter[]) {
+  constructor(i: CommandInteraction, fighters: Fighter[], biome?: Biome) {
     this.i = i;
     this.fighters = [...new Set(fighters)];
+    this.biome = biome
+  }
+
+  protected isBiomeDamage() {
+    if (!this.biome) return false
+    return random.bool(this.biome.chance)
   }
 
   protected sleep() {
@@ -83,12 +92,13 @@ export abstract class BaseBattle {
   }
 
   protected attack(p1: Fighter, p2: Fighter) {
-    const isCrit = p1.isCrit(), isElementalDamage = p1.isElementalDamage() && p1.element.isStrongAgainst(p2.element)
+    const isBiomeDamage = this.isBiomeDamage(), isCrit = p1.isCrit(), isElementalDamage = p1.isElementalDamage() && p1.element.isStrongAgainst(p2.element)
 
     let multipleDamageBy = 0
 
     if (isCrit) multipleDamageBy += p1.critDamage
     if (isElementalDamage) multipleDamageBy += p2.elementalDamage
+    if (isBiomeDamage) multipleDamageBy += this.biome!.damage
 
     const attackRate = multipleDamageBy ? p1.attack * multipleDamageBy : p1.attack
     const armorProtection = p2.armor * attackRate;
@@ -107,6 +117,8 @@ export abstract class BaseBattle {
         { name: "Damage Reduction", value: `\`${Math.round(armorProtection)}\``, inline: true },
         { name: "Damage Done", value: `\`${Math.round(damageDealt)}\``, inline: true },
       ]);
+
+    if (this.biome) battleEmbed.setAuthor({ name: 'Biome: ' + this.biome.name, iconURL: this.biome?.iconUrl })
 
     if (p1.imageUrl)
       battleEmbed.setThumbnail(p1.imageUrl);

@@ -1,6 +1,6 @@
 {
   "name": "@abdulrahman1s/discordjs-rpg",
-  "version": "5.2.3",
+  "version": "5.2.4",
   "description": "discord rpg framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
