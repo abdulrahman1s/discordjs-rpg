@@ -1,9 +1,9 @@
 export enum ElementalType {
-    Fire,
-    Mist,
-    Physical,
-    Sludge,
-    Frost,
+    Fire = 'Fire',
+    Mist = 'Mist',
+    Physical = 'Physical',
+    Sludge = 'Sludge',
+    Frost = 'Frost',
 }
 
 export class Elemental {
@@ -15,6 +15,10 @@ export class Elemental {
   
     isWeakAgainst(elm: Elemental): boolean {
       return this.weakAgainst.includes(elm.type)
+    }
+
+    toString() {
+      return this.type
     }
   }
 

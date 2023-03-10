@@ -82,6 +82,10 @@ export class Fighter extends Base {
     return this.equippedWeapons.reduce((prev, cur) => prev += cur.elementalDamage, 0)
   }
 
+  get elementalChance() {
+    return this.equippedWeapons.reduce((prev, cur) => prev += cur.elementalChance, 0)
+  }
+
   isElementalDamage() {
     const chance: number = this.equippedWeapons.reduce((prev, cur) => prev += cur.elementalChance, 0)
     return random.bool(chance)
@@ -94,6 +98,7 @@ export class Fighter extends Base {
   show(fighter?: Fighter) {
     const armor = formatPercent(this.armor);
     const critChance = formatPercent(this.critChance);
+    const elementalChance = formatPercent(this.elementalChance)
 
     const armorList = this.equippedArmors
       .map((x, i) => `${i + 1}. ${x.name}`)
@@ -108,11 +113,14 @@ export class Fighter extends Base {
       .setColor(GOLD)
       .setFields([
         { name: "Name", value: this.name },
+        { name: 'Element', value: inlineCode(this.element.type) },
         { name: "Attack", value: inlineCode(Math.round(this.attack).toString()), inline: true },
         { name: "HP", value: inlineCode(Math.round(this.hp).toString()), inline: true },
         { name: "Armor", value: inlineCode(armor), inline: true },
         { name: "Crit Chance", value: inlineCode(critChance), inline: true },
         { name: "Crit Damage", value: inlineCode(`x${this.critDamage.toFixed(1)}`), inline: true },
+        { name: 'Elemental Chance', value: inlineCode(elementalChance), inline: true },
+        { name: 'Elemental Damage', value: inlineCode(`x${this.elementalDamage.toFixed(1)}`), inline: true },
         { name: "Skill", value: this.skill?.name || "none", inline: true },
         { name: "Pet", value: this.pet?.name || "none" },
         { name: "Armors", value: armorList || "none", inline: true },
@@ -144,7 +152,7 @@ export class Fighter extends Base {
         i++;
       }
 
-      const fields2 = ["armor", "critChance"] as const;
+      const fields2 = ["armor", "critChance", 'elementalChance'] as const;
       for (const field of fields2) {
 
         const monsterStat = this[field];
@@ -163,7 +171,7 @@ export class Fighter extends Base {
       }
 
 
-      const fields3 = ["critDamage"] as const;
+      const fields3 = ["critDamage", 'elementalDamage'] as const;
       for (const field of fields3) {
 
         const monsterStat = this[field];

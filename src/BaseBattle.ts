@@ -100,8 +100,8 @@ export abstract class BaseBattle {
     const battleEmbed = new EmbedBuilder()
       .setColor(RED)
       .setFields([
-        { name: "Attacking Player", value: p1.name, inline: true },
-        { name: "Defending Player", value: p2.name, inline: true },
+        { name: "Attacking Player", value: p1.name + ` (${p1.element})`, inline: true },
+        { name: "Defending Player", value: p2.name + ` (${p2.element})`, inline: true },
         { name: "Round", value: `\`${this.round.toString()}\``, inline: true },
         { name: "Attack Rate", value: `\`${Math.round(attackRate)}${text}\``, inline: true },
         { name: "Damage Reduction", value: `\`${Math.round(armorProtection)}\``, inline: true },
