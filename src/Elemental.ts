@@ -24,10 +24,10 @@ export class Elemental {
 
   
   export const FIRE = new Elemental(ElementalType.Fire, [ElementalType.Mist], [ElementalType.Frost]);
-  export const MIST = new Elemental(ElementalType.Mist, [ElementalType.Fire], [ElementalType.Sludge]);
+  export const MIST = new Elemental(ElementalType.Mist, [ElementalType.Sludge], [ElementalType.Fire]);
   export const PHYSICAL = new Elemental(ElementalType.Physical, [], []);
   export const SLUDGE = new Elemental(ElementalType.Sludge, [ElementalType.Frost], [ElementalType.Mist]);
-  export const FROST = new Elemental(ElementalType.Frost, [ElementalType.Sludge], [ElementalType.Fire]);
+  export const FROST = new Elemental(ElementalType.Frost, [ElementalType.Fire], [ElementalType.Sludge]);
   
   export const ELEMENTAL_TYPES = {
     FIRE,
